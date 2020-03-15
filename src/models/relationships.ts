@@ -42,8 +42,20 @@ const addRelationship = (person: Person) => {
 
 const getRelationship = (type: RelationshipType): ((p: Person) => Person[]) => {
   return (person: Person): Person[] => {
-    return person.relations
-      .filter((relationship: Relationship) => relationship.type == type)
-      .map((relationship: Relationship) => relationship.person)
+    return conditionally<Person, Person[]>({
+      if: (person: Person): boolean => !!person,
+      then: (person: Person): Person[] =>
+        filterRelationship(person.relations, type),
+      else: (person: Person): Person[] => new Array()
+    })(person)
   }
+}
+
+const filterRelationship = (
+  relationships: Relationship[],
+  type: RelationshipType
+): Person[] => {
+  return relationships
+    .filter((relationship: Relationship) => relationship.type == type)
+    .map((relationship: Relationship) => relationship.person)
 }
