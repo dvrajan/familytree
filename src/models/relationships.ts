@@ -20,7 +20,7 @@ export const addChild = (forPerson: Person, toPerson: Person) =>
   compose(addRelationship(forPerson), child)(toPerson)
 
 export const getChildren = (forPerson: Person): Person[] => {
-  if(!forPerson) {
+  if (!forPerson) {
     return new Array()
   }
 
@@ -30,7 +30,9 @@ export const getChildren = (forPerson: Person): Person[] => {
 }
 
 export const getSpouse = (forPerson: Person): Person => {
-  return forPerson.relations.filter(relation => relation.type == RelationshipType.Spouse).map(relationship => relationship.person)[0]
+  return forPerson.relations
+    .filter(relation => relation.type == RelationshipType.Spouse)
+    .map(relationship => relationship.person)[0]
 }
 
 export const addRelationship = (person: Person) => {
