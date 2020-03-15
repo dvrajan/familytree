@@ -7,8 +7,3 @@ export const errors = {
 export const success = {
   CHILD_ADDITION_SUCCEEDED: 'CHILD_ADDITION_SUCCEEDED'
 }
-
-export const gender = {
-  MALE: 'male',
-  FEMALE: 'female'
-}

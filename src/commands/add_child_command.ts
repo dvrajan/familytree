@@ -1,7 +1,16 @@
 
 import { findPersonByName } from './../person_finder'
 import { Person, isMale, newPerson, reproduce, Gender } from './../models/person'
-import { errors, gender, success } from './../utils/constants'
+import { errors, success } from './../utils/constants'
+
+interface GenderMap {
+  [key: string]: Gender
+}
+
+const genderMap: GenderMap = {
+  "male": Gender.Male,
+  "female": Gender.Female
+}
 
 export class AddChildCommand {
   root: Person
@@ -25,16 +34,8 @@ export class AddChildCommand {
       return errors.CHILD_ADDITION_FAILED
     }
 
-    const child = newPerson(childName, this.getGender(childGender))
+    const child = newPerson(childName, genderMap[childGender.toLowerCase()])
     reproduce(parent, child)
     return success.CHILD_ADDITION_SUCCEEDED
-  }
-
-  private getGender(genderStr: string): Gender {
-    if(genderStr.toLowerCase() == gender.MALE) {
-      return Gender.Male
-    } else {
-      return Gender.Female
-    }
   }
 }
