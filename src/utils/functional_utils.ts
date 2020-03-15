@@ -14,3 +14,7 @@ export const conditionally = <T, U>(options: {
 }) => (t: T): U => {
   return options.if(t) ? options.then(t) : options.else(t)
 }
+
+export const takeFirst = <T>(values: T[]): T => {
+  return values && values[0]
+}

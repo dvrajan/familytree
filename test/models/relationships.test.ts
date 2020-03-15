@@ -1,16 +1,6 @@
-import { addRelationship, Relationships, addSpouse, addParent, addChild, getChildren } from './../../src/models/relationships';
+import { addSpouse, addParent, addChild, getChildren, getParents } from './../../src/models/relationships';
 import {newPerson, Gender} from '../../src/models/person'
 import {RelationshipType, child} from '../../src/models/relationship'
-
-test('addRelationship', () => {
-  let king = newPerson("Arthur", Gender.Male)
-  let queen = newPerson("Margret", Gender.Female)
-  let relationship = {person: queen, type: RelationshipType.Spouse }
-
-  addRelationship(king)(relationship)
-
-  expect(king.relations[0]).toStrictEqual(relationship)
-})
 
 test ('add spouse', () => {
   let king = newPerson("Arthur", Gender.Male)
@@ -41,6 +31,37 @@ test ('add child', () => {
 
   expect(queen.relations[0].person).toBe(prince)
   expect(queen.relations[0].type).toBe(RelationshipType.Child)
+})
+
+describe('getParents', () => {
+  test('for a single parent', () => {
+    let queen = newPerson("Margret", Gender.Female)
+    let prince = newPerson("Charlie", Gender.Male)
+    addParent(prince, queen)
+
+    let parents = getParents(prince)
+
+    expect(parents.length).toBe(1)
+    expect(parents[0]).toStrictEqual(queen)
+  })
+  test('for no parent', () => {
+    let prince = newPerson("Charlie", Gender.Male)
+    let parents = getParents(prince)
+    expect(parents.length).toBe(0)
+  })
+  test('for parents', () => {
+    let king = newPerson("Arthur", Gender.Male)
+    let queen = newPerson("Margret", Gender.Female)
+    let prince = newPerson("Charlie", Gender.Male)
+    addParent(prince, king)
+    addParent(prince, queen)
+
+    let parents = getParents(prince)
+
+    expect(parents.length).toBe(2)
+    expect(parents[0]).toStrictEqual(king)
+    expect(parents[1]).toStrictEqual(queen)
+  })
 })
 
 describe('getChildren', () => {

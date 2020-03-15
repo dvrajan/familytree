@@ -28,3 +28,9 @@ test('conditionally', ()=> {
   expect(conditionalFn(11)).toBe(true)
   expect(conditionalFn(9)).toBe(false)
 })
+
+test('takeFirst', () => {
+  expect(fnutils.takeFirst<number>([1,2,3,4])).toBe(1)
+  expect(fnutils.takeFirst<number>([])).toBe(undefined)
+  expect(fnutils.takeFirst<number>(undefined)).toBe(undefined)
+})
