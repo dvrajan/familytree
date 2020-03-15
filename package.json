@@ -5,7 +5,8 @@
   "author": "devarajan",
   "license": "MIT",
   "scripts": {
-    "start": "./node_modules/typescript/bin/tsc -skipLibCheck && node ./dist/geektrust.js",
+    "build": "./node_modules/typescript/bin/tsc -skipLibCheck",
+    "start": "yarn run build && node ./dist/geektrust.js",
     "test": "jest"
   },
   "devDependencies": {
