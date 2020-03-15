@@ -13,3 +13,18 @@ test('compose', () => {
 
   expect(result).toBe(10)
 })
+
+test('conditionally', ()=> {
+  let gt10 = (val: number) => {
+    return val > 10
+  }
+
+  const conditionalFn = fnutils.conditionally<number, boolean>({
+    if: gt10,
+    then: (val :number): boolean => true,
+    else: (val :number): boolean => false
+  })
+
+  expect(conditionalFn(11)).toBe(true)
+  expect(conditionalFn(9)).toBe(false)
+})

@@ -1,5 +1,6 @@
-import { addSpouse, addChild, addParent } from './relationships';
+import { addSpouse, addChild, addParent, getChildren, getSpouse } from './relationships';
 import { Relationship } from './relationship'
+import { compose, conditionally } from '../utils/functional_utils';
 
 export enum Gender {
   Male = 1,
@@ -24,6 +25,22 @@ export const marry = (partner1: Person, partner2: Person) => {
 export const reproduce = (parent: Person, child: Person) => {
   addChild(parent, child)
   addParent(child, parent)
+}
+
+export const children = (person: Person): Person[] => {
+  return conditionally<Person, Person[]>({
+    if: isMale,
+    then: (person: Person): Person[] => compose(getChildren, spouse)(person),
+    else: (person: Person): Person[] => getChildren(person),
+  })(person)
+}
+
+export const spouse = (person: Person): Person => {
+  return getSpouse(person)
+}
+
+const isMale = (person: Person): boolean => {
+  return person.gender == Gender.Male
 }
 
 
