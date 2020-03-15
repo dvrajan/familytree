@@ -1,8 +1,9 @@
+import { conditionally } from './utils/functional_utils'
 import { Person, children } from './models/person'
 
 export const findPersonByName = (familyRoot: Person, name: string): Person => {
   let result = dfs(new NodeAdapter(familyRoot), name)
-  if(result){
+  if (result) {
     return (result as NodeAdapter).person
   }
   return null
@@ -19,26 +20,27 @@ class NodeAdapter {
     this.person = person
   }
 
-  identifier(): String {
+  identifier (): String {
     return this.person.name
   }
 
   children (): Node[] {
-    return children(this.person).map((person: Person) => new NodeAdapter(person))
+    return children(this.person).map(
+      (person: Person) => new NodeAdapter(person)
+    )
   }
 }
 
 const dfs = (node: Node, identifier: string): Node => {
-  if (node.identifier() === identifier) {
-    return node
-  }
+  return conditionally<Node, Node>({
+    if: (n: Node): boolean => n.identifier() === identifier,
+    then: (n: Node): Node => n,
+    else: (n: Node): Node => findInChildren(n.children(), identifier)
+  })(node)
+}
 
-  let children = node.children()
-  for (const child of children) {
-    const result = dfs(child, identifier)
-    if (result != undefined) {
-      return result
-    }
-  }
-  return undefined
+const findInChildren = (children: Node[], identifier: string): Node => {
+  return children
+    .map((child): Node => dfs(child, identifier))
+    .find((n: Node): boolean => !!n)
 }
