@@ -18,3 +18,9 @@ export const conditionally = <T, U>(options: {
 export const takeFirst = <T>(values: T[]): T => {
   return values && values[0]
 }
+
+export const map = <T, U>(fn: (t: T) => U): (t: T[]) => U[] => {
+  return (t: T[]) : U[] => {
+    return t.map(val => fn(val))
+  }
+}

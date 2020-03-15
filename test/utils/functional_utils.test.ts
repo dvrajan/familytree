@@ -34,3 +34,14 @@ test('takeFirst', () => {
   expect(fnutils.takeFirst<number>([])).toBe(undefined)
   expect(fnutils.takeFirst<number>(undefined)).toBe(undefined)
 })
+
+test('map', () => {
+  const lengthMapper = fnutils.map<string, number>((str: string): number => {
+    return str.length
+  })
+
+  const lengths = lengthMapper(["one", "two", "three"])
+
+  expect(lengths).toHaveLength(3)
+  expect(lengths).toStrictEqual([3, 3, 5])
+})
