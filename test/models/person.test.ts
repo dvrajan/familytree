@@ -1,6 +1,6 @@
 
 import {RelationshipType} from '../../src/models/relationship'
-import {Gender, newPerson, marry, reproduce, children} from '../../src/models/person'
+import {Gender, newPerson, marry, reproduce, children, filterMale, filterFemale} from '../../src/models/person'
 
 test('marry', () => {
   let king = newPerson('Arthur', Gender.Male)
@@ -44,5 +44,43 @@ describe('children', () => {
     expect(result.length).toBe(2)
     expect(result[0]).toStrictEqual(prince1)
     expect(result[1]).toStrictEqual(prince2)
+  })
+})
+
+describe('filterMale', ()=>{
+  test('exists', () => {
+    let queen = newPerson('Margret', Gender.Female)
+    let king = newPerson('Arthur', Gender.Male)
+
+    let result = filterMale([queen, king])
+    expect(result).toHaveLength(1)
+    expect(result[0]).toStrictEqual(king)
+  })
+
+  test('does not exist', () => {
+    let queen = newPerson('Margret', Gender.Female)
+
+    let result = filterMale([queen])
+
+    expect(result).toHaveLength(0)
+  })
+})
+
+describe('filterFemale', ()=>{
+  test('exists', () => {
+    let queen = newPerson('Margret', Gender.Female)
+    let king = newPerson('Arthur', Gender.Male)
+
+    let result = filterFemale([queen, king])
+    expect(result).toHaveLength(1)
+    expect(result[0]).toStrictEqual(queen)
+  })
+
+  test('does not exist', () => {
+    let king = newPerson('Arthur', Gender.Male)
+
+    let result = filterFemale([king])
+
+    expect(result).toHaveLength(0)
   })
 })

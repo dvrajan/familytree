@@ -1,6 +1,12 @@
-import { addSpouse, addChild, addParent, getChildren, getSpouse } from './relationships';
+import {
+  addSpouse,
+  addChild,
+  addParent,
+  getChildren,
+  getSpouse
+} from './relationships'
 import { Relationship } from './relationship'
-import { compose, conditionally } from '../utils/functional_utils';
+import { compose, conditionally } from '../utils/functional_utils'
 
 export enum Gender {
   Male = 1,
@@ -14,7 +20,7 @@ export interface Person {
 }
 
 export const newPerson = (name: string, gender: Gender): Person => {
-  return {name, gender, relations: new Array()}
+  return { name, gender, relations: new Array() }
 }
 
 export const marry = (partner1: Person, partner2: Person) => {
@@ -31,7 +37,7 @@ export const children = (person: Person): Person[] => {
   return conditionally<Person, Person[]>({
     if: isMale,
     then: (person: Person): Person[] => compose(getChildren, spouse)(person),
-    else: (person: Person): Person[] => getChildren(person),
+    else: (person: Person): Person[] => getChildren(person)
   })(person)
 }
 
@@ -39,9 +45,15 @@ export const spouse = (person: Person): Person => {
   return getSpouse(person)
 }
 
+export const filterMale = (people: Person[]): Person[] =>
+  filterGender(Gender.Male)(people)
+
+export const filterFemale = (people: Person[]): Person[] =>
+  filterGender(Gender.Female)(people)
+
+const filterGender = (gender: Gender) => (people: Person[]): Person[] =>
+  people.filter(p => p.gender == gender)
+
 const isMale = (person: Person): boolean => {
   return person.gender == Gender.Male
 }
-
-
-
