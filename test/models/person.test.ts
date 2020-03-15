@@ -1,6 +1,14 @@
-
-import {RelationshipType} from '../../src/models/relationship'
-import {Gender, newPerson, marry, reproduce, children, filterMale, filterFemale} from '../../src/models/person'
+import { RelationshipType } from '../../src/models/relationship'
+import {
+  Gender,
+  newPerson,
+  marry,
+  reproduce,
+  children,
+  filterMale,
+  filterFemale,
+  except
+} from '../../src/models/person'
 
 test('marry', () => {
   let king = newPerson('Arthur', Gender.Male)
@@ -8,8 +16,14 @@ test('marry', () => {
 
   marry(king, queen)
 
-  expect(king.relations[0]).toStrictEqual({person: queen, type: RelationshipType.Spouse})
-  expect(queen.relations[0]).toStrictEqual({person: king, type: RelationshipType.Spouse})
+  expect(king.relations[0]).toStrictEqual({
+    person: queen,
+    type: RelationshipType.Spouse
+  })
+  expect(queen.relations[0]).toStrictEqual({
+    person: king,
+    type: RelationshipType.Spouse
+  })
 })
 
 test('reproduce', () => {
@@ -18,19 +32,25 @@ test('reproduce', () => {
 
   reproduce(queen, prince)
 
-  expect(queen.relations[0]).toStrictEqual({person: prince, type: RelationshipType.Child})
-  expect(prince.relations[0]).toStrictEqual({person: queen, type: RelationshipType.Parent})
+  expect(queen.relations[0]).toStrictEqual({
+    person: prince,
+    type: RelationshipType.Child
+  })
+  expect(prince.relations[0]).toStrictEqual({
+    person: queen,
+    type: RelationshipType.Parent
+  })
 })
 
 describe('children', () => {
-    let king = newPerson('Arthur', Gender.Male)
-    let queen = newPerson('Margret', Gender.Female)
-    marry(king, queen)
+  let king = newPerson('Arthur', Gender.Male)
+  let queen = newPerson('Margret', Gender.Female)
+  marry(king, queen)
 
-    let prince1 = newPerson('Charlie', Gender.Male)
-    let prince2 = newPerson('Adam', Gender.Male)
-    reproduce(queen, prince1)
-    reproduce(queen, prince2)
+  let prince1 = newPerson('Charlie', Gender.Male)
+  let prince2 = newPerson('Adam', Gender.Male)
+  reproduce(queen, prince1)
+  reproduce(queen, prince2)
 
   test('children', () => {
     let result = children(king)
@@ -47,7 +67,7 @@ describe('children', () => {
   })
 })
 
-describe('filterMale', ()=>{
+describe('filterMale', () => {
   test('exists', () => {
     let queen = newPerson('Margret', Gender.Female)
     let king = newPerson('Arthur', Gender.Male)
@@ -66,7 +86,7 @@ describe('filterMale', ()=>{
   })
 })
 
-describe('filterFemale', ()=>{
+describe('filterFemale', () => {
   test('exists', () => {
     let queen = newPerson('Margret', Gender.Female)
     let king = newPerson('Arthur', Gender.Male)
@@ -81,6 +101,25 @@ describe('filterFemale', ()=>{
 
     let result = filterFemale([king])
 
+    expect(result).toHaveLength(0)
+  })
+})
+
+describe('except', () => {
+  test('exclude self', () => {
+    let sibling1 = newPerson('Dominique', Gender.Female)
+    let sibling2 = newPerson('Ted', Gender.Male)
+    let sibling3 = newPerson('Louis', Gender.Male)
+
+    let result = except(sibling2)([sibling1, sibling2, sibling3])
+    expect(result).toHaveLength(2)
+    expect(result[0]).toStrictEqual(sibling1)
+    expect(result[1]).toStrictEqual(sibling3)
+  })
+
+  test('empty array', () => {
+    let person = newPerson('Dominique', Gender.Female)
+    let result = except(person)([])
     expect(result).toHaveLength(0)
   })
 })
