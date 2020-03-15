@@ -5,7 +5,7 @@
   "author": "devarajan",
   "license": "MIT",
   "scripts": {
-    "start": "./node_modules/typescript/bin/tsc -skipLibCheck && node ./dist/geektrust.js /Users/deva/repos/sandbox/familytreenode/test_inputs",
+    "start": "./node_modules/typescript/bin/tsc -skipLibCheck && node ./dist/geektrust.js",
     "test": "jest"
   },
   "devDependencies": {
