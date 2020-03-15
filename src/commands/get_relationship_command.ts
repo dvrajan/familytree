@@ -35,7 +35,7 @@ export class GetRelationshipCommand {
     this.root = root
   }
 
-  execute (...args: any[]): string {
+  execute (...args: string[]): string {
     const name = args[0]
     const relative = args[1]
 

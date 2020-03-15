@@ -19,7 +19,7 @@ export class AddChildCommand {
     this.root = root
   }
 
-  execute(...args: any[]): string {
+  execute(...args: string[]): string {
     const parentName = args[0]
     const childName = args[1]
     const childGender = args[2]

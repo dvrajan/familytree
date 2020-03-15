@@ -6,7 +6,7 @@ import { GetRelationshipCommand } from './get_relationship_command';
 
 
 interface Command {
-  execute(...args: any): string
+  execute(...args: string[]): string
 }
 
 interface CommandMap {
