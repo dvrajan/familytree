@@ -36,7 +36,10 @@ export const reproduce = (parent: Person, child: Person) => {
 export const children = (person: Person): Person[] => {
   return conditionally<Person, Person[]>({
     if: isMale,
-    then: (person: Person): Person[] => compose(getChildren, spouse)(person),
+    then: (person: Person): Person[] => {
+      const s = spouse(person)
+      return s ? [s] : []
+    },
     else: (person: Person): Person[] => getChildren(person)
   })(person)
 }

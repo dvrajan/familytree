@@ -5,7 +5,7 @@
   "author": "devarajan",
   "license": "MIT",
   "scripts": {
-    "start": "./node_modules/typescript/bin/tsc geektrust.ts",
+    "start": "./node_modules/typescript/bin/tsc -skipLibCheck && node ./dist/geektrust.js /Users/deva/repos/sandbox/familytreenode/test_inputs",
     "test": "jest"
   },
   "devDependencies": {
@@ -16,8 +16,5 @@
     "ts-jest": "^25.2.1",
     "tslint": "^6.1.0",
     "typescript": "^3.8.3"
-  },
-  "dependencies": {
-    "line-reader": "^0.4.0"
   }
 }

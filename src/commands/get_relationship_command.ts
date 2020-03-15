@@ -30,21 +30,21 @@ const relativesMap: RelativesMap = {
 }
 
 export class GetRelationshipCommand {
-  name: string
-  relative: string
-
-  constructor (...args: any[]) {
-    this.name = args[0]
-    this.relative = args[1]
+  root: Person
+  constructor (root: Person) {
+    this.root = root
   }
 
-  execute (root: Person): string {
-    const person = findPersonByName(root, this.name)
+  execute (...args: any[]): string {
+    const name = args[0]
+    const relative = args[1]
+
+    const person = findPersonByName(this.root, name)
     if(!person){
       return errors.PERSON_NOT_FOUND
     }
 
-    const relatives = relativesMap[this.relative](person)
+    const relatives = relativesMap[relative](person)
     if(relatives.length == 0){
       return errors.NONE
     }

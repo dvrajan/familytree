@@ -54,9 +54,8 @@ describe('children', () => {
 
   test('children', () => {
     let result = children(king)
-    expect(result.length).toBe(2)
-    expect(result[0]).toStrictEqual(prince1)
-    expect(result[1]).toStrictEqual(prince2)
+    expect(result.length).toBe(1)
+    expect(result[0]).toStrictEqual(queen)
   })
 
   test('children for female', () => {
