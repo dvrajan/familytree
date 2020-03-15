@@ -9,5 +9,11 @@ export const mother = (person: Person): Person =>
 export const father = (person: Person): Person =>
   compose(getSpouse, mother)(person)
 
+export const siblings = (person: Person): Person =>
+  compose(except(person), getChildren, mother)(person)
+
 export const brothers = (person: Person): Person =>
-  compose(filterMale, except(person), getChildren, mother)(person)
+  compose(filterMale, siblings)(person)
+
+export const sisters = (person: Person): Person =>
+  compose(filterFemale, siblings)(person)
