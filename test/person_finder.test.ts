@@ -6,7 +6,7 @@ describe('findPersonByName', () => {
       let king = newPerson('Arthur', Gender.Male)
 
       let person = findPersonByName(king, 'Unknown')
-      expect(person).toBeFalsy
+      expect(person).toBeNull
     })
 
 

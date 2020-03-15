@@ -57,6 +57,6 @@ export const except = (person: Person) => (people: Person[]): Person[] =>
 const filterGender = (gender: Gender) => (people: Person[]): Person[] =>
   people.filter(p => p.gender == gender)
 
-const isMale = (person: Person): boolean => {
+export const isMale = (person: Person): boolean => {
   return person.gender == Gender.Male
 }
