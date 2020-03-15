@@ -398,6 +398,11 @@
     jest-diff "^25.1.0"
     pretty-format "^25.1.0"
 
+"@types/line-reader@^0.0.28":
+  version "0.0.28"
+  resolved "https://registry.yarnpkg.com/@types/line-reader/-/line-reader-0.0.28.tgz#cb8ff256829b9a237fcf31bc39bc2fb771cfd4c4"
+  integrity sha1-y4/yVoKbmiN/zzG8Obwvt3HP1MQ=
+
 "@types/node@^13.9.1":
   version "13.9.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.1.tgz#96f606f8cd67fb018847d9b61e93997dabdefc72"
@@ -2171,6 +2176,11 @@ levn@~0.3.0:
   dependencies:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
+
+line-reader@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/line-reader/-/line-reader-0.4.0.tgz#17e44818da0ac335675ba300954f94ef670e66fd"
+  integrity sha1-F+RIGNoKwzVnW6MAlU+U72cOZv0=
 
 locate-path@^5.0.0:
   version "5.0.0"
