@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "geektrust.js",
   "author": "devarajan",
-  "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc -skipLibCheck",
     "start": "yarn run build && node ./dist/geektrust.js",
