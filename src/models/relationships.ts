@@ -6,7 +6,7 @@ import {
   child,
   RelationshipType
 } from './relationship'
-import { Person } from './person'
+import { Person, isMale } from './person'
 
 export interface Relationships {
   relations: Relationship[]
@@ -22,8 +22,7 @@ export const addChild = (forPerson: Person, toPerson: Person) =>
 export const getChildren = (forPerson: Person): Person[] => {
   return conditionally({
     if: (person: Person): boolean => !!person,
-    then: (person: Person): Person[] =>
-      getRelationship(RelationshipType.Child)(person),
+    then: (person: Person): Person[] => children(person),
     else: (person: Person): Person[] => new Array()
   })(forPerson)
 }
@@ -33,6 +32,14 @@ export const getSpouse = (forPerson: Person): Person =>
 
 export const getParents = (forPerson: Person): Person[] =>
   getRelationship(RelationshipType.Parent)(forPerson)
+
+const children = (person: Person) => {
+  return conditionally({
+    if: (person: Person): boolean => isMale(person),
+    then: (person: Person): Person[] => compose(getRelationship(RelationshipType.Child), getSpouse)(person),
+    else: (person: Person): Person[] => getRelationship(RelationshipType.Child)(person)
+  })(person)
+}
 
 const addRelationship = (person: Person) => {
   return (relationship: Relationship) => {
